@@ -38,8 +38,26 @@ def DarkenImage(image):
             pixelO = tuple(pixelO)
             image.putpixel((x,y), pixelO)
 
-funs = {'Invert':InvertImage,
-        'Darken':DarkenImage}
+def LightenImage(image):
+    size = image.size
+    xs = size[0]; ys = size[1]
+    for y in range(ys):
+        
+        for x in range(xs):
+
+            #I - input O - output
+            pixelI = image.getpixel((x,y))
+            pixelO = []
+            pixelO.append(int(pixelI[0]*(2-pixelI[0]/255)))
+            pixelO.append(int(pixelI[1]*(2-pixelI[1]/255)))
+            pixelO.append(int(pixelI[2]*(2-pixelI[2]/255)))
+            pixelO.append(pixelI[3])
+            pixelO = tuple(pixelO)
+            image.putpixel((x,y), pixelO)
+
+funs = {'Invert' :InvertImage,
+        'Darken' :DarkenImage,
+        'Lighten':LightenImage}
 
 print(files)
 
