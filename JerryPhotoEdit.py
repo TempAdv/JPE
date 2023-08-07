@@ -112,6 +112,7 @@ def RedenImage(image):
             image.putpixel((x,y), pixelO)
     return image
 
+#Smoother
 #DL - down left
 def DrawDL(img, x, y, color):
     x = x*8 ; y = y*8 
@@ -164,12 +165,58 @@ def DrawUR(img, x, y, color):
     img.putpixel((x+4,y  ), color)
     img.putpixel((x+6,y+1), color)
 
-def SmoothPixelArt(imageI):
+#Linear
+
+def DrawLDL(img, x, y, color):
+    x = x*8 ; y = y*8 
+    for i in range(1,5):
+        for j in range(i):
+            img.putpixel((x+j,y+i+3), color)
+
+#DR - down right
+def DrawLDR(img, x, y, color):
+    x = x*8 ; y = y*8 
+    for i in range(1,5):
+        for j in range(i):
+            img.putpixel((x+7-j,y+i+3), color)
+
+#UL - up left
+def DrawLUL(img, x, y, color):
+    x = x*8 ; y = y*8 
+    for i in range(1,4):
+        for j in range(4-i):
+            img.putpixel((x+j,y+i-1), color)
+
+#UR - up right
+def DrawLUR(img, x, y, color):
+    x = x*8 ; y = y*8 
+    for i in range(1,4):
+        for j in range(4-i):
+            img.putpixel((x+7-j,y+i-1), color)
+
+def SmoothPixelArt(imageI): 
     
+    global DrawDL
+    global DrawDR
+    global DrawUL
+    global DrawUR
+
     size = imageI.size
     xs = size[0]; ys = size[1]
 
     imageO = imageI.resize((xs*8,ys*8), resample=Image.Resampling.NEAREST )
+
+    SmoothType = input('smoothing type:')
+    if SmoothType == 'Linear':
+        DrawUR = DrawLUR
+        DrawUL = DrawLUL
+        DrawDL = DrawLDL
+        DrawDR = DrawLDR
+    elif SmoothType == 'Smoother':
+        pass
+    else:
+        print('unknown smoothing type')
+        return
 
     for y in range(ys - 1):
         
