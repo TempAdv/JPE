@@ -206,7 +206,11 @@ def SmoothPixelArt(imageI):
 
     imageO = imageI.resize((xs*8,ys*8), resample=Image.Resampling.NEAREST )
 
-    SmoothType = input('smoothing type:')
+    SmoothType = input('''---types---
+Linear
+Smoother
+
+smoothing type:''')
     if SmoothType == 'Linear':
         DrawUR = DrawLUR
         DrawUL = DrawLUL
@@ -322,7 +326,16 @@ funs = {'Invert' :InvertImage ,
 
 print(files)
 
-funname = input('Enter function name:')
+funname = input('''---functions---
+Invert
+Darken
+Lighten
+Reden
+Bluen
+Greenen
+SmoothPixelArt
+
+Enter function name:''')
 
 fun = funs[funname]
 for file in files:
